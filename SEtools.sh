@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # wget -O ELK_Install_Ubuntu_script.sh  https://raw.githubusercontent.com/tdmakepeace/ELK_Single_script/refs/heads/main/ELK_Install_Ubuntu_script.sh && chmod +x ELK_Install_Ubuntu_script.sh  &&  ./ELK_Install_Ubuntu_script.sh
-# wget -O SEtools.sh  https://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@raw.githubusercontent.com/tdmakepeace/SE_Single_script/refs/heads/main/SEtools.sh 
+# wget -O SEtools.sh  https://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@raw.githubusercontent.com/tdmakepeace/SE_Single_script/refs/heads/main/SEtools.sh && chmod +x SEtools.sh  &&  ./SEtools.sh
 
 
 
