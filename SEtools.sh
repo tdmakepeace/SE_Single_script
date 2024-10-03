@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # wget -O ELK_Install_Ubuntu_script.sh  https://raw.githubusercontent.com/tdmakepeace/ELK_Single_script/refs/heads/main/ELK_Install_Ubuntu_script.sh && chmod +x ELK_Install_Ubuntu_script.sh  &&  ./ELK_Install_Ubuntu_script.sh
-# wget -O SEtools.sh  https://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@raw.githubusercontent.com/tdmakepeace/SE_Single_script/refs/heads/main/SEtools.sh && chmod +x SEtools.sh  &&  ./SEtools.sh
+# wget -O SEtools.sh  https://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@raw.githubusercontent.com/tdmakepeace/SE_Single_script/refs/heads/main/SEtools.sh?token=GHSAT0AAAAAACUSPJE6R3QOMNIDD23SBYN6ZX6NLUQ && sleep 1 && chmod +x SEtools.sh  &&  ./SEtools.sh
 
 
 
@@ -9,14 +9,33 @@ tools()
 {
 
 echo "
+All SE's:
+I have created this script to install the ELK stack, and then some of the SE tools.
+If you want more tools added let me know, and i can update the script.
+But the idea behind it is so we have the same labs setups available, so we can just onto different labs and know what to do.
+
+The first thing is will do is download the customer ELK stack script that will deploy the enviroment and the ELK stack.
+(you need to select B, a couple of times).
+You can then install the tools. This is dependent on the ELK setup and PSM running already.
+
+
 Everything has been set up to run under tmux sessions. this is so you can move around single SSH session, 
 and watch some of the logs for things like Pentools and bigred.
+	
+	eg:
+	tmux a -t brb
+	tmux a -t pentools
+	
+	use cntl-B then D to detach.
+	use cntl-B then S to switch.
 
+If you close just re-run the start script. /pensandotools/starttools.sh
 
 
 To run the tools and tmux session run the starttools.sh script from the pensandotools/ folder
 "
 
+read -p "Are you ready to continue, any key to continue"
 
 
 
@@ -24,6 +43,7 @@ To run the tools and tmux session run the starttools.sh script from the pensando
 sudo apt-get update
 sudo NEEDRESTART_SUSPEND=1 apt-get dist-upgrade --yes
 sudo NEEDRESTART_SUSPEND=1 apt-get install tmux ansible sshpass --yes
+
 
 
 cd /pensandotools/
@@ -57,7 +77,7 @@ tmux new -d -s brb '/pensandotools/scripts/brb_inner_run.sh'
 
 echo "
 # PSM Server
-adminuser = '$psmip'
+adminuser = '$psmuser'
 adminpwd = '$psmpass'
 ipman = '$psmip'
 
@@ -86,12 +106,24 @@ ports = '443'
 				echo " PSM security Policy  - the name of the security policy to be created eg: Isolated_Hosts"
 					read psmpolicy
 				echo " VRF to be assigned  - the name of the VRF the policy will be assigned to eg: default"
-					read psmuser
+					read psmvrf
 				echo " managment network range  - this is just an example set of rules to show who can talk to the isolated machines in ip/mask formate eg: 192.168.102.0/24"
-					read psmpass
+					read psmman
 
 
 				  
+				echo "
+webhost='0.0.0.0'
+webport=9999
+IsolatePolicy = '$psmpolicy'
+AdminNet = '$psmman'
+VRFToDemo = '$psmvrf'
+demotime = 10
+
+" > /pensandotools/Bigredbutton/var.py
+
+
+  	else
 				echo "
 webhost='0.0.0.0'
 webport=9999
@@ -101,10 +133,6 @@ VRFToDemo = "default"
 demotime = 10
 
 " > /pensandotools/Bigredbutton/var.py
-
-
-  	else
-    	echo "Continue"
   	fi
 
 
@@ -126,7 +154,7 @@ demotime = 10
 					
 				  
 				  clear
-				cat >> /pensandotools/bob/.penrc << EOF
+				echo "
 				{
 				  "psm": {
 				    "servers": [{
@@ -143,8 +171,8 @@ demotime = 10
 				      "proto":"1"
 				    }
 				  }
-				}
-				EOF
+				}" 				> /pensandotools/bob/.penrc
+				
 
 
 echo "
@@ -214,5 +242,3 @@ It will also do the setting up of the SE tools.
   	fi
 
 done   
-
-
