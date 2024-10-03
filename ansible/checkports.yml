@@ -1,0 +1,17 @@
+---
+- hosts: loadtest
+  become: false
+  gather_facts: false
+
+  tasks:
+
+  - name: Exec sh script on Remote Node
+    shell:
+      cmd: |
+       ps -aef|grep iperf | grep -v grep | wc -l 
+       
+    register: result
+
+  - name: Show result
+    debug:
+      msg: "Number of listing ports active is {{ result.stdout }}"

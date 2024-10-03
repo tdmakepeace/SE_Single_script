@@ -1,0 +1,23 @@
+all:
+  hosts:
+    localhost
+  children:
+    loadtest:
+      hosts:
+        10.88.1.235:
+          ansible_user: demo
+          ansible_password: Pensando0$
+        10.88.1.236:
+          ansible_user: demo
+          ansible_password: Pensando0$
+        10.88.1.237:
+          ansible_user: demo
+          ansible_password: Pensando0$
+        10.88.1.238:
+          ansible_user: demo
+          ansible_password: Pensando0$
+    cxswitches:
+      hosts:
+        one.example.com:
+        two.example.com:
+        three.example.com:

@@ -1,0 +1,16 @@
+---
+- hosts: loadtest
+  become: false
+  gather_facts: false
+
+  tasks:
+
+  - name: Exec sh script on Remote Node
+    shell:
+      cmd: |
+        /pensandotools/scripts/server_iperf.sh start bg
+    register: result
+
+  - name: Show result
+    debug:
+      msg: "{{ result.stdout }}"
